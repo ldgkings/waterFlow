@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "DGWaterFlowView.h"
+#import "DGWaterFlowViewCell.h"
 
-@interface ViewController ()
+@interface ViewController ()<DGWaterFlowViewDataSource,DGWaterFlowViewDelegate>
 
 @end
 
@@ -16,12 +18,52 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+  
+    DGWaterFlowView *waterFlowView = [[DGWaterFlowView alloc] init];
+    waterFlowView.dataSource = self;
+    waterFlowView.delegate = self;
+    waterFlowView.frame = self.view.bounds;
+    [self.view addSubview:waterFlowView];
+    
+    [waterFlowView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - 数据源方法
+- (NSInteger)numberOfCellsInWaterFlowView:(DGWaterFlowView *)waterFlowView
+{
+    return 50;
+}
+
+- (DGWaterFlowViewCell *)waterFlowView:(DGWaterFlowView *)waterFlowView cellAtIndex:(NSInteger)index
+{
+    
+   
+    DGWaterFlowViewCell *cell = [[DGWaterFlowViewCell alloc] init];
+    cell.backgroundColor = DGRandomColor;
+    return cell;
+}
+
+#pragma mark - 代理方法
+- (CGFloat)waterFlowView:(DGWaterFlowView *)waterFlowView heightAtIndex:(NSInteger)index
+{
+    switch (index % 3 ) {
+        case 0: return 50;
+        case 2: return 70;
+        case 1: return 100;
+        default: return 150;
+    }
+}
+
+- (CGFloat)waterFlowView:(DGWaterFlowView *)waterFlowView marginForType:(DGWaterFlowViewMarginType)type
+{
+    switch (type) {
+         case DGWaterFlowViewMarginTypeBottom:
+         case DGWaterFlowViewMarginTypeTop:
+         case DGWaterFlowViewMarginTypeLeft:
+         case DGWaterFlowViewMarginTypeRight:
+            return 5;
+        default: return 10;
+    }
 }
 
 @end

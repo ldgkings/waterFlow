@@ -1,0 +1,34 @@
+//
+//  waterFlow.pch
+//  waterFlow
+//
+//  Created by LDG on 15/12/28.
+//  Copyright © 2015年 ldg. All rights reserved.
+//
+
+#ifndef waterFlow_pch
+#define waterFlow_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* waterFlow_pch */
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+ // 随机色
+// 设置颜色
+#define DGColor(r,g,b)  [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+// 随机色
+#define DGRandomColor DGColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
+
+
+#ifdef DEBUG // 调试状态
+#define DGLog(...) NSLog(__VA_ARGS__) //给nslog起个别名
+#else
+#define DGLog(...)
+#endif
+
+#endif

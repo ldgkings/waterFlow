@@ -15,6 +15,8 @@
 		738ACF6C1C314E5A00EFEF9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 738ACF6A1C314E5A00EFEF9F /* LaunchScreen.storyboard */; };
 		738ACF771C314E5A00EFEF9F /* waterFlowTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF761C314E5A00EFEF9F /* waterFlowTests.m */; };
 		738ACF821C314E5A00EFEF9F /* waterFlowUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF811C314E5A00EFEF9F /* waterFlowUITests.m */; };
+		738ACF911C31501E00EFEF9F /* DGWaterFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF901C31501E00EFEF9F /* DGWaterFlowView.m */; };
+		738ACF941C31566200EFEF9F /* DGWaterFlowViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF931C31566200EFEF9F /* DGWaterFlowViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,11 @@
 		738ACF7D1C314E5A00EFEF9F /* waterFlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = waterFlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		738ACF811C314E5A00EFEF9F /* waterFlowUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = waterFlowUITests.m; sourceTree = "<group>"; };
 		738ACF831C314E5A00EFEF9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		738ACF8F1C31501E00EFEF9F /* DGWaterFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGWaterFlowView.h; sourceTree = "<group>"; };
+		738ACF901C31501E00EFEF9F /* DGWaterFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGWaterFlowView.m; sourceTree = "<group>"; };
+		738ACF921C31566200EFEF9F /* DGWaterFlowViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGWaterFlowViewCell.h; sourceTree = "<group>"; };
+		738ACF931C31566200EFEF9F /* DGWaterFlowViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGWaterFlowViewCell.m; sourceTree = "<group>"; };
+		738ACF951C315E4B00EFEF9F /* waterFlow.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waterFlow.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +108,10 @@
 		738ACF5B1C314E5900EFEF9F /* waterFlow */ = {
 			isa = PBXGroup;
 			children = (
+				738ACF8F1C31501E00EFEF9F /* DGWaterFlowView.h */,
+				738ACF901C31501E00EFEF9F /* DGWaterFlowView.m */,
+				738ACF921C31566200EFEF9F /* DGWaterFlowViewCell.h */,
+				738ACF931C31566200EFEF9F /* DGWaterFlowViewCell.m */,
 				738ACF5F1C314E5900EFEF9F /* AppDelegate.h */,
 				738ACF601C314E5900EFEF9F /* AppDelegate.m */,
 				738ACF621C314E5900EFEF9F /* ViewController.h */,
@@ -118,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				738ACF5D1C314E5900EFEF9F /* main.m */,
+				738ACF951C315E4B00EFEF9F /* waterFlow.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -271,6 +283,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				738ACF641C314E5900EFEF9F /* ViewController.m in Sources */,
+				738ACF911C31501E00EFEF9F /* DGWaterFlowView.m in Sources */,
+				738ACF941C31566200EFEF9F /* DGWaterFlowViewCell.m in Sources */,
 				738ACF611C314E5900EFEF9F /* AppDelegate.m in Sources */,
 				738ACF5E1C314E5900EFEF9F /* main.m in Sources */,
 			);
@@ -413,6 +427,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = waterFlow/waterFlow.pch;
 				INFOPLIST_FILE = waterFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.ldg.waterFlow;
@@ -424,6 +440,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = waterFlow/waterFlow.pch;
 				INFOPLIST_FILE = waterFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.ldg.waterFlow;
