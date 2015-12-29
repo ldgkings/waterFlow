@@ -11,7 +11,7 @@
 #import "DGWaterFlowViewCell.h"
 
 @interface ViewController ()<DGWaterFlowViewDataSource,DGWaterFlowViewDelegate>
-
+@property (nonatomic,strong) DGWaterFlowView * waterFlowView;
 @end
 
 @implementation ViewController
@@ -24,6 +24,7 @@
     waterFlowView.delegate = self;
     waterFlowView.frame = self.view.bounds;
     [self.view addSubview:waterFlowView];
+    self.waterFlowView = waterFlowView;
     
     [waterFlowView reloadData];
 }
@@ -37,8 +38,13 @@
 - (DGWaterFlowViewCell *)waterFlowView:(DGWaterFlowView *)waterFlowView cellAtIndex:(NSInteger)index
 {
     
-   
-    DGWaterFlowViewCell *cell = [[DGWaterFlowViewCell alloc] init];
+    static NSString *ID = @"cell";
+
+    DGWaterFlowViewCell *cell = [self.waterFlowView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[DGWaterFlowViewCell alloc] init];
+        cell.identifier = ID;
+    }
     cell.backgroundColor = DGRandomColor;
     return cell;
 }
@@ -64,6 +70,12 @@
             return 5;
         default: return 10;
     }
+}
+
+- (void)waterFlowView:(DGWaterFlowView *)waterFlowView didSelectAtIndex:(NSInteger)index
+{
+    NSLog(@"%ld",index);
+
 }
 
 @end

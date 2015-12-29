@@ -14,8 +14,43 @@
 #import "DGWaterFlowView.h"
 #import "DGWaterFlowViewCell.h"
 
+@interface DGWaterFlowView ()
+/** 所有cell的frames */
+@property (nonatomic,strong) NSMutableArray  *cellFrames;
+/** 一个索引对应一个cell */
+@property (nonatomic,strong) NSMutableDictionary * displayingCells;
+/** 缓存池 */
+@property (nonatomic,strong) NSMutableSet * resuableCells;
+
+@end
+
 @implementation DGWaterFlowView
 @dynamic delegate;
+
+#pragma mark - 懒加载
+- (NSMutableSet *)resuableCells
+{
+    if (_resuableCells == nil) {
+        self.resuableCells = [NSMutableSet set];
+    }
+    return _resuableCells;
+}
+
+- (NSMutableArray *)cellFrames
+{
+    if (_cellFrames == nil) {
+        self.cellFrames = [NSMutableArray array];
+    }
+    return _cellFrames;
+}
+
+- (NSMutableDictionary *)displayingCells
+{
+    if (_displayingCells == nil) {
+        self.displayingCells = [NSMutableDictionary dictionary];
+    }
+    return _displayingCells;
+}
 
 #pragma mark - 公共方法
 
@@ -29,13 +64,32 @@
 }
 - (id)dequeueReusableCellWithIdentifier:(NSString *)identifier
 {
-    return nil;
+   __block DGWaterFlowViewCell *resuableCell = nil;
+    [self.resuableCells enumerateObjectsUsingBlock:^(DGWaterFlowViewCell *cell, BOOL * _Nonnull stop) {
+        if ([cell.identifier isEqualToString:identifier]) {
+            resuableCell = cell;
+            *stop = YES;
+        }
+    }];
+    
+    if (resuableCell) {
+        [self.resuableCells removeObject:resuableCell];
+    }
+    
+    return resuableCell;
 }
 
 // 计算出所有cell的frame摆上去
 - (void)reloadData
 {
-
+    
+    // 移除正在展示的cell
+    [self.displayingCells.allValues makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    // 清楚所有的cell
+    [self.displayingCells removeAllObjects];
+    [self.cellFrames removeAllObjects];
+    [self.resuableCells removeAllObjects];
+    
    // cell的个数
    NSInteger numberOfCells = [self.dataSource numberOfCellsInWaterFlowView:self];
    NSInteger numberOfColumns = [self numberOfColumn];
@@ -82,13 +136,11 @@
         }
 
         CGRect cellFrame = CGRectMake(cellX, cellY, cellW, cellH);
-        DGLog(@" %d --%@",i,NSStringFromCGRect(cellFrame));
+        //添加到数组中
+        [self.cellFrames addObject:[NSValue valueWithCGRect:cellFrame]];
         // 更新最短的那一个最大的Y值
         maxYOfColumns[cellColumn] = CGRectGetMaxY(cellFrame);
         
-        DGWaterFlowViewCell *cell = [self.dataSource waterFlowView:self cellAtIndex:i];
-        cell.frame = cellFrame;
-        [self addSubview:cell];
     }
     
     // 设置scrollerView的contensize让他可以滚
@@ -102,7 +154,74 @@
     self.contentSize = CGSizeMake(0, contentH);
 }
 
+/**
+ * 布局子控件（UIScrolerView 在滚动的时候一直调用这个方法）
+ */
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    NSInteger  numberOfcells = self.cellFrames.count;
+    // 遍历数组中的frame如果发现要显示cell就向数据源索要cell
+    for (int i = 0; i <numberOfcells ; i++) {
+        // 取出i位置对应的frame
+        CGRect cellFrame = [self.cellFrames[i] CGRectValue];
+        // 优先从字典中取出cell
+        DGWaterFlowViewCell *cell = self.displayingCells[@(i)];
+        
+        if ([self isInScreen:cellFrame]) { // 在屏幕上
+            if (cell == nil) {
+                cell = [self.dataSource waterFlowView:self cellAtIndex:i];
+                cell.frame = cellFrame;
+                [self addSubview:cell];
+                self.displayingCells[@(i)] = cell;
+            }
+        }else{ // 不在屏幕上
+            if (cell) {
+                // 把cell重屏幕上移除
+                [cell removeFromSuperview];
+                [self.displayingCells removeObjectForKey:@(i)];
+                
+                // 放入缓存池
+                [self.resuableCells addObject:cell];
+            }
+        }
+    }
+}
+
+#pragma mark - 事件处理
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+   if (![self.delegate respondsToSelector:@selector(waterFlowView:didSelectAtIndex:)]) return;
+ 
+    UITouch *touch = [touches anyObject];
+    CGPoint point= [touch locationInView:self];
+
+    
+    __block NSNumber *selectIndex = nil;
+    [self.displayingCells enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, DGWaterFlowViewCell *cell , BOOL * _Nonnull stop) {
+        if (CGRectContainsPoint(cell.frame, point)) {
+            selectIndex = key;
+            *stop = YES;
+        }
+    }];
+    if (selectIndex) {
+        [self.delegate waterFlowView:self didSelectAtIndex:selectIndex.unsignedLongValue];
+    }
+    
+}
+
 #pragma mark - 私有方法
+
+/**
+ * 判断cell是否在屏幕上
+ */
+- (BOOL)isInScreen:(CGRect)frame
+{
+    return   (self.contentOffset.y < CGRectGetMaxY(frame) && (self.contentOffset.y + self.bounds.size.height) > CGRectGetMinY(frame));
+}
+
 - (CGFloat)marginWithType:(DGWaterFlowViewMarginType)type
 {
     if ([self.delegate respondsToSelector:@selector(waterFlowView:marginForType:)]) {
@@ -130,6 +249,4 @@
         return DGWaterFlowViewDefaultNumberOfColumns;
     }
 }
-
-
 @end
