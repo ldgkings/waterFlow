@@ -17,6 +17,7 @@
 		738ACF821C314E5A00EFEF9F /* waterFlowUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF811C314E5A00EFEF9F /* waterFlowUITests.m */; };
 		738ACF911C31501E00EFEF9F /* DGWaterFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF901C31501E00EFEF9F /* DGWaterFlowView.m */; };
 		738ACF941C31566200EFEF9F /* DGWaterFlowViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 738ACF931C31566200EFEF9F /* DGWaterFlowViewCell.m */; };
+		9656CD4425B53765000371CA /* testViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9656CD4325B53765000371CA /* testViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		738ACF921C31566200EFEF9F /* DGWaterFlowViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGWaterFlowViewCell.h; sourceTree = "<group>"; };
 		738ACF931C31566200EFEF9F /* DGWaterFlowViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGWaterFlowViewCell.m; sourceTree = "<group>"; };
 		738ACF951C315E4B00EFEF9F /* waterFlow.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waterFlow.pch; sourceTree = "<group>"; };
+		9656CD4225B53765000371CA /* testViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testViewController.h; sourceTree = "<group>"; };
+		9656CD4325B53765000371CA /* testViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				738ACF6A1C314E5A00EFEF9F /* LaunchScreen.storyboard */,
 				738ACF6D1C314E5A00EFEF9F /* Info.plist */,
 				738ACF5C1C314E5900EFEF9F /* Supporting Files */,
+				9656CD4225B53765000371CA /* testViewController.h */,
+				9656CD4325B53765000371CA /* testViewController.m */,
 			);
 			path = waterFlow;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -282,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9656CD4425B53765000371CA /* testViewController.m in Sources */,
 				738ACF641C314E5900EFEF9F /* ViewController.m in Sources */,
 				738ACF911C31501E00EFEF9F /* DGWaterFlowView.m in Sources */,
 				738ACF941C31566200EFEF9F /* DGWaterFlowViewCell.m in Sources */,
@@ -516,6 +523,7 @@
 				738ACF881C314E5A00EFEF9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		738ACF891C314E5A00EFEF9F /* Build configuration list for PBXNativeTarget "waterFlowTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +532,7 @@
 				738ACF8B1C314E5A00EFEF9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		738ACF8C1C314E5A00EFEF9F /* Build configuration list for PBXNativeTarget "waterFlowUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +541,7 @@
 				738ACF8E1C314E5A00EFEF9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
